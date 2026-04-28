@@ -1,71 +1,75 @@
-def print_matrix(matrix):
-    """
-    Допоміжна функція для форматованого виведення матриці на екран.
-    """
+def validate_matrix(matrix):
+    """Перевіряє, чи матриця не порожня і чи є прямокутною."""
+    if not matrix or not matrix[0]:
+        raise ValueError("Матриця порожня або не ініціалізована.")
+    
+    cols_count = len(matrix[0])
     for row in matrix:
-        # Використовуємо форматування для вирівнювання колонок (по 5 символів на число)
-        print(" ".join(f"{val:5d}" for val in row))
+        if len(row) != cols_count:
+            raise ValueError("Матриця має бути правильною прямокутною (рядки різної довжини не допускаються).")
 
+def multiply_matrix_by_scalar(matrix, scalar):
+    """Виконує множення матриці на константу (C = a * B)."""
+    validate_matrix(matrix)
+    rows = len(matrix)
+    cols = len(matrix[0])
+    
+    matrix_c = []
+    for i in range(rows):
+        new_row = []
+        for j in range(cols):
+            new_row.append(scalar * matrix[i][j])
+        matrix_c.append(new_row)
+        
+    return matrix_c
+
+def get_sum_of_min_in_columns(matrix):
+    """Обчислює суму найменших елементів кожного стовпця матриці."""
+    validate_matrix(matrix)
+    rows = len(matrix)
+    cols = len(matrix[0])
+    
+    sum_of_min_elements = 0
+    
+    for j in range(cols):
+        min_in_col = matrix[0][j]
+        for i in range(1, rows):
+            if matrix[i][j] < min_in_col:
+                min_in_col = matrix[i][j]
+        sum_of_min_elements += min_in_col
+        
+    return sum_of_min_elements
+
+def print_matrix(matrix):
+    """Допоміжна функція для форматованого виведення матриці."""
+    for row in matrix:
+        print(" ".join(f"{val:5d}" for val in row))
 
 def main():
     try:
-
-        const_a = 3
-
+        scalar_a = 3
         matrix_b = [
             [1, -5,   8,  12],
             [4,  2, -10,   3],
             [-7,  9,   0, -15]
         ]
 
-        if not matrix_b or not matrix_b[0]:
-            raise ValueError("Матриця порожня або не ініціалізована.")
-
-        cols_count = len(matrix_b[0])
-        for row in matrix_b:
-            if len(row) != cols_count:
-                raise ValueError(
-                    "Матриця має бути правильною прямокутною (рядки різної довжини не допускаються).")
-
-        rows = len(matrix_b)
-        cols = len(matrix_b[0])
-
         print("Початкова матриця B:")
         print_matrix(matrix_b)
-        print(f"Константа a = {const_a}\n")
+        print(f"Константа a = {scalar_a}\n")
 
-        matrix_c = []
-        for i in range(rows):
-            new_row = []
-            for j in range(cols):
-                new_row.append(const_a * matrix_b[i][j])
-            matrix_c.append(new_row)
-
+        # Дія 1
+        matrix_c = multiply_matrix_by_scalar(matrix_b, scalar_a)
         print("Результуюча матриця C = a * B:")
         print_matrix(matrix_c)
         print()
 
-        sum_of_min_elements = 0
+        # Дія 2
+        sum_min = get_sum_of_min_in_columns(matrix_c)
+        print(f"Сума найменших елементів кожного стовпця матриці C: {sum_min}")
 
-        for j in range(cols):
-
-            min_in_col = matrix_c[0][j]
-
-            for i in range(1, rows):
-                if matrix_c[i][j] < min_in_col:
-                    min_in_col = matrix_c[i][j]
-
-            print(f"Найменший елемент у стовпці {j}: {min_in_col}")
-            sum_of_min_elements += min_in_col
-
-        print(
-            f"\nСума найменших елементів кожного стовпця матриці C: {sum_of_min_elements}")
-
-    except ValueError as ve:
-        print(f"Помилка вхідних даних: {ve}")
     except Exception as e:
-        print(f"Виникла непередбачена помилка: {e}")
-
+        print(f"Помилка: {e}")
 
 if __name__ == "__main__":
     main()
