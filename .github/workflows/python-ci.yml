@@ -1,0 +1,26 @@
+name: Python CI
+
+# Запускати автоматично при кожному push у гілки main або master
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Завантажуємо ваш код на віртуальну машину
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2. Встановлюємо Python
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    # 3. Запускаємо ваш скрипт
+    # УВАГА: якщо ваш файл називається інакше (не main.py), змініть назву нижче!
+    - name: Run Matrix Operations script
+      run: python lab1.py
