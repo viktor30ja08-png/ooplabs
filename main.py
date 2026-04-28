@@ -1,5 +1,5 @@
 def validate_matrix(matrix):
-    """Перевіряє, чи матриця не порожня і чи є прямокутною."""
+    
     if not matrix or not matrix[0]:
         raise ValueError("Матриця порожня або не ініціалізована.")
     
@@ -9,7 +9,7 @@ def validate_matrix(matrix):
             raise ValueError("Матриця має бути правильною прямокутною (рядки різної довжини не допускаються).")
 
 def multiply_matrix_by_scalar(matrix, scalar):
-    """Виконує множення матриці на константу (C = a * B)."""
+   
     validate_matrix(matrix)
     rows = len(matrix)
     cols = len(matrix[0])
@@ -24,7 +24,7 @@ def multiply_matrix_by_scalar(matrix, scalar):
     return matrix_c
 
 def get_sum_of_min_in_columns(matrix):
-    """Обчислює суму найменших елементів кожного стовпця матриці."""
+   
     validate_matrix(matrix)
     rows = len(matrix)
     cols = len(matrix[0])
@@ -41,7 +41,7 @@ def get_sum_of_min_in_columns(matrix):
     return sum_of_min_elements
 
 def print_matrix(matrix):
-    """Допоміжна функція для форматованого виведення матриці."""
+    
     for row in matrix:
         print(" ".join(f"{val:5d}" for val in row))
 
@@ -58,13 +58,13 @@ def main():
         print_matrix(matrix_b)
         print(f"Константа a = {scalar_a}\n")
 
-        # Дія 1
+       
         matrix_c = multiply_matrix_by_scalar(matrix_b, scalar_a)
         print("Результуюча матриця C = a * B:")
         print_matrix(matrix_c)
         print()
 
-        # Дія 2
+     
         sum_min = get_sum_of_min_in_columns(matrix_c)
         print(f"Сума найменших елементів кожного стовпця матриці C: {sum_min}")
 
